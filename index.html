@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMB Agency - Hành Trình Mới, Trải Nghiệm Mới</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #0F4C81; /* Classic Blue - Đáng tin cậy, Chuyên nghiệp */
+            --accent-color: #E67E22;  /* Màu cam - Kích thích đặt tour */
+            --text-dark: #2C3E50;
+            --text-light: #7F8C8D;
+            --bg-light: #F8F9FA;
+            --border-color: #E2E8F0;
+            --shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Đẩy footer xuống đáy trang nếu ít nội dung */
+        #home-section, #detail-section {
+            flex: 1;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: #fff;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+
+        .badge-agency {
+            background: #EBF5FF;
+            color: var(--primary-color);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid #BEE3F8;
+        }
+
+        .slogan {
+            font-size: 14px;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* ==================== 1. GIAO DIỆN TRANG CHỦ ==================== */
+        .hero-banner {
+            background: linear-gradient(rgba(15, 76, 129, 0.85), rgba(15, 76, 129, 0.95)), url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80') center/cover;
+            color: #fff;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .hero-banner h1 { font-size: 38px; font-weight: 700; margin-bottom: 15px; }
+        .hero-banner p { font-size: 18px; opacity: 0.9; margin-bottom: 30px; }
+
+        .search-filter-bar {
+            background: #fff;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .filter-item { display: flex; align-items: center; gap: 8px; color: var(--text-dark); font-weight: 500; flex: 1; }
+        .filter-item i { color: var(--primary-color); font-size: 16px; }
+        
+        .filter-item select {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-dark);
+            cursor: pointer;
+            width: 100%;
+            padding: 5px 0;
+        }
+
+        .btn-search { background: var(--accent-color); color: #fff; border: none; padding: 12px 30px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .btn-search:hover { background: #D35400; }
+
+        @media (max-width: 768px) {
+            .search-filter-bar { flex-direction: column; border-radius: 15px; gap: 15px; padding: 20px; }
+            .filter-item { width: 100%; border-left: none !important; padding-left: 0 !important; }
+            .btn-search { width: 100%; }
+        }
+
+        .homepage-tours { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
+        .section-title { font-size: 28px; color: var(--primary-color); margin-bottom: 30px; font-weight: 700; position: relative; padding-left: 15px; }
+        .section-title::before { content: ''; position: absolute; left: 0; top: 5px; bottom: 5px; width: 5px; background: var(--accent-color); border-radius: 2px; }
+
+        /* FIX LỖI CO GIÃN THẺ: Thay thế auto-fit thành auto-fill để cố định kích thước gốc */
+        .tour-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 30px; 
+        }
+        
+        .tour-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s, box-shadow 0.3s; }
+        .tour-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .tour-card-img { height: 200px; width: 100%; object-fit: cover; }
+        .tour-card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .tour-card-tag { background: #EBF5FF; color: var(--primary-color); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; margin-bottom: 10px; width: fit-content; }
+        .tour-card-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: var(--text-dark); min-height: 48px; }
+        .tour-card-info { display: flex; justify-content: space-between; color: var(--text-light); font-size: 13px; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+        .tour-card-footer { display: flex; justify-content: space-between; align-items: center; }
+        .tour-card-price { font-size: 18px; font-weight: 700; color: var(--accent-color); }
+        .btn-view-tour { background: var(--primary-color); color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+        /* ==================== 2. GIAO DIỆN CHI TIẾT TOUR ==================== */
+        #detail-section {
+            display: none;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 992px) { #detail-section { grid-template-columns: 1fr; } }
+
+        .btn-back { grid-column: 1 / -1; display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--border-color); padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--text-dark); width: fit-content; box-shadow: var(--shadow); transition: all 0.2s; }
+        .btn-back:hover { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+
+        .tour-overview-card { background: #fff; padding: 25px; border-radius: 12px; box-shadow: var(--shadow); margin-bottom: 25px; }
+        .tour-title { font-size: 26px; color: var(--primary-color); font-weight: 700; margin-bottom: 15px; }
+        .tour-meta { display: flex; gap: 15px; color: var(--text-light); font-size: 14px; align-items: center; }
+        .rating { color: #F1C40F; }
+
+        .sticky-tabs { position: sticky; top: 75px; background: #fff; display: flex; border-bottom: 2px solid var(--border-color); margin-bottom: 25px; z-index: 90; border-radius: 8px 8px 0 0; }
+        .tab-btn { flex: 1; padding: 15px 10px; background: none; border: none; font-size: 15px; font-weight: 600; color: var(--text-light); cursor: pointer; text-align: center; border-bottom: 3px solid transparent; }
+        .tab-btn.active { color: var(--primary-color); border-bottom-color: var(--primary-color); background: #F8FAFC; }
+
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        .panel-content-card { background: #fff; padding: 25px; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border-color); margin-bottom: 20px; }
+        .panel-content-card h3 { color: var(--primary-color); margin-bottom: 15px; font-size: 18px; }
+        .panel-content-card ul { padding-left: 20px; }
+        .panel-content-card li { margin-bottom: 10px; font-size: 15px; }
+
+        /* Accordion Timeline */
+        .accordion-item { background: #fff; border-radius: 8px; margin-bottom: 15px; box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--border-color); }
+        .accordion-header { padding: 18px 20px; background: #fff; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .accordion-header:hover { background: #F8FAFC; }
+        .day-title { font-size: 17px; font-weight: 600; color: var(--primary-color); display: flex; align-items: center; gap: 10px; }
+        .accordion-content { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease-out; }
+        .accordion-item.active .accordion-content { padding: 20px; max-height: 3000px; }
+        .accordion-header i.fa-chevron-down { transition: transform 0.3s; }
+        .accordion-item.active .accordion-header i.fa-chevron-down { transform: rotate(180deg); }
+
+        /* Timeline Nodes */
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before { content: ''; position: absolute; left: 7px; top: 10px; bottom: 10px; width: 2px; background: #CBD5E1; }
+        .timeline-node { position: relative; margin-bottom: 25px; }
+        .timeline-node:last-child { margin-bottom: 0; }
+        .timeline-dot { position: absolute; left: -30px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 3px solid var(--primary-color); z-index: 2; }
+        .time-tag { font-size: 12px; font-weight: 700; color: var(--primary-color); background: #EBF5FF; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 5px; }
+        .node-title { font-size: 15px; font-weight: 600; margin-bottom: 5px; }
+        .node-desc { font-size: 13px; color: var(--text-light); margin-bottom: 8px; }
+        .node-media { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-top: 10px; }
+        .main-img { width: 100%; height: 160px; object-fit: cover; border-radius: 6px; }
+        .map-preview { width: 100%; height: 160px; background: #E2E8F0; border-radius: 6px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--primary-color); font-size: 12px; font-weight: 500; cursor: pointer; border: 1px dashed var(--primary-color); }
+        .ux-action-btn { background: #fff; border: 1px solid var(--primary-color); color: var(--primary-color); padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+        .ux-action-btn:hover { background: var(--primary-color); color: #fff; }
+
+        /* Booking Sidebar */
+        .booking-sidebar { background: #fff; padding: 25px; border-radius: 12px; box-shadow: var(--shadow); position: sticky; top: 75px; height: fit-content; border-top: 4px solid var(--primary-color); }
+        .price-amount { font-size: 30px; font-weight: 700; color: var(--accent-color); margin-bottom: 15px; }
+        .btn-booking { width: 100%; background: var(--accent-color); color: #fff; border: none; padding: 15px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+        .features-list { margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 20px; }
+        .feature-item { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 14px; }
+        .feature-item i { color: #2ECC71; }
+
+        /* ==================== 3. THIẾT KẾ FOOTER THƯƠNG HIỆU ==================== */
+        footer {
+            background-color: #1A252F; /* Tông xám tối cao cấp độc quyền */
+            color: #fff;
+            padding: 35px 20px;
+            margin-top: 60px;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-brand-side .brand-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .footer-brand-side .brand-slogan {
+            font-size: 13px;
+            color: #95A5A6;
+            font-style: italic;
+        }
+
+        .footer-contact-side {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .contact-link-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ECF0F1;
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .contact-link-item:hover {
+            color: var(--accent-color);
+        }
+
+        .contact-link-item i {
+            color: var(--accent-color);
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container { flex-direction: column; text-align: center; }
+            .footer-contact-side { flex-direction: column; gap: 12px; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo-area" onclick="showHomePage()">
+                <div class="logo">HMB AGENCY</div>
+                <div class="badge-agency"><i class="fa-solid fa-shield-check"></i> Đại lý lữ hành uy tín</div>
+            </div>
+            <div class="slogan">"Hành trình mới, Trải nghiệm mới"</div>
+        </div>
+    </header>
+
+    <div id="home-section">
+        <section class="hero-banner">
+            <h1>Khám Phá Thế Giới Theo Cách Của Bạn</h1>
+            <p>Giải pháp du lịch trọn gói cao cấp – Định hình trải nghiệm cùng HMB Agency</p>
+            
+            <div class="search-filter-bar">
+                <div class="filter-item">
+                    <i class="fa-solid fa-location-dot"></i> 
+                    <select id="search-location">
+                        <option value="">Tất cả điểm đến</option>
+                        <option value="phuquoc">Phú Quốc</option>
+                        <option value="nhatrang">Nha Trang</option>
+                        <option value="sapa">Sa Pa (Tây Bắc)</option>
+                        <option value="danang">Đà Nẵng</option>
+                        <option value="halong">Vịnh Hạ Long</option>
+                        <option value="dalat">Đà Lạt</option>
+                        <option value="mientay">Miền Tây sông nước</option>
+                        <option value="condao">Côn Đảo</option>
+                    </select>
+                </div>
+                <div class="filter-item" style="border-left: 1px solid var(--border-color); padding-left: 15px;">
+                    <i class="fa-solid fa-tags"></i>
+                    <select id="search-tag">
+                        <option value="">Tất cả loại hình trải nghiệm</option>
+                        <option value="Bán Chạy Nhất">Bán Chạy Nhất</option>
+                        <option value="Nghỉ Dưỡng Biển">Nghỉ Dưỡng Biển</option>
+                        <option value="Trải Nghiệm Tây Bắc">Trải Nghiệm Tây Bắc</option>
+                        <option value="Hot Nhất Mùa Hè">Hot Nhất Mùa Hè</option>
+                        <option value="Trải Nghiệm Thượng Lưu">Trải Nghiệm Thượng Lưu</option>
+                        <option value="Xu Hướng Giới Trẻ">Xu Hướng Giới Trẻ</option>
+                        <option value="Văn Hóa Đậm Chất">Văn Hóa Đậm Chất</option>
+                        <option value="Tour Tâm Linh Cao Cấp">Tour Tâm Linh Cao Cấp</option>
+                    </select>
+                </div>
+                <button class="btn-search" onclick="executeSearch()">Tìm Kiếm</button>
+            </div>
+        </section>
+
+        <section class="homepage-tours">
+            <h2 class="section-title" id="homepage-title">Hệ Thống Gói Du Lịch Độc Quyền HMB</h2>
+            <div class="tour-grid" id="tour-cards-container">
+                </div>
+        </section>
+    </div>
+
+    <div id="detail-section">
+        <button class="btn-back" onclick="showHomePage()">
+            <i class="fa-solid fa-arrow-left"></i> Quay lại danh sách gói
+        </button>
+
+        <main>
+            <div class="tour-overview-card">
+                <h1 class="tour-title" id="dyn-title">Tên Tour</h1>
+                <div class="tour-meta">
+                    <span id="dyn-rating"><i class="fa-solid fa-star rating"></i> 4.9</span>
+                    <span>•</span>
+                    <span id="dyn-duration"><i class="fa-solid fa-clock"></i> 3 Ngày 2 Đêm</span>
+                    <span>•</span>
+                    <span>Khởi hành: Hàng ngày</span>
+                </div>
+            </div>
+
+            <div class="sticky-tabs">
+                <button class="tab-btn active" onclick="switchTab(this, 'tab-itinerary')">Lịch trình chi tiết</button>
+                <button class="tab-btn" onclick="switchTab(this, 'tab-services')">Dịch vụ bao gồm</button>
+                <button class="tab-btn" onclick="switchTab(this, 'tab-policies')">Chính sách</button>
+            </div>
+
+            <div id="tab-itinerary" class="tab-panel active">
+                <div class="itinerary-accordion" id="dyn-itinerary-box"></div>
+            </div>
+
+            <div id="tab-services" class="tab-panel">
+                <div class="panel-content-card">
+                    <h3><i class="fa-solid fa-circle-check" style="color: #2ECC71;"></i> Các dịch vụ cao cấp đi kèm:</h3>
+                    <ul id="dyn-services-list"></ul>
+                </div>
+            </div>
+
+            <div id="tab-policies" class="tab-panel">
+                <div class="panel-content-card">
+                    <h3><i class="fa-solid fa-circle-exclamation" style="color: var(--accent-color);"></i> Điều khoản & Hoàn huỷ:</h3>
+                    <ul id="dyn-policies-list"></ul>
+                </div>
+            </div>
+        </main>
+
+        <aside>
+            <div class="booking-sidebar">
+                <div style="font-size: 14px; color: var(--text-light);">Giá trọn gói tối ưu:</div>
+                <div class="price-amount" id="total-price">0 đ</div>
+                <button class="btn-booking" onclick="alert('Đang kết nối hệ thống Smart Itinerary xuất QR Code...')">Đặt Tour Ngay</button>
+                <div class="features-list">
+                    <div class="feature-item"><i class="fa-solid fa-shield-halved" style="color:#2ECC71"></i> <span>Bảo hiểm du lịch 100M VNĐ</span></div>
+                    <div class="feature-item"><i class="fa-solid fa-headset" style="color:#2ECC71"></i> <span>Hỗ trợ đại lý 24/7 toàn trình</span></div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand-side">
+                <div class="brand-name">HMB AGENCY</div>
+                <div class="brand-slogan">Hành trình mới, Trải nghiệm mới.</div>
+            </div>
+            <div class="footer-contact-side">
+                <a href="tel:0855555140" class="contact-link-item">
+                    <i class="fa-solid fa-phone-volume"></i>
+                    <span>Hotline: 0855 555 140</span>
+                </a>
+                <a href="mailto:hmb.agency.group@gmail.com" class="contact-link-item">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                    <span>Email: hmb.agency.group@gmail.com</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const tourDatabase = {
+            phuquoc: {
+                title: "Tuyệt tác thiên đường: Phú Quốc Thượng Lưu",
+                price: "5,850,000 đ", rating: "4.9 (1.240 khách)", duration: "3 Ngày 2 Đêm", tag: "Bán Chạy Nhất",
+                img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80",
+                services: ["Vé máy bay khứ hồi (Gồm 20kg ký gửi)", "Resort 4 sao đối tác HMB", "Cano cao tốc tham quan 4 đảo", "Bảo hiểm 100tr"],
+                policies: ["Hoàn hủy 100% nếu có thiên tai", "Đổi thông tin hành khách miễn phí trước 48h"],
+                days: [
+                    { title: "Ngày 1: Khởi hành & Định hình trải nghiệm", nodes: [{ time: "09:00", title: "Cất cánh đến Đảo Ngọc", desc: "Hãng Vietnam Airlines tối ưu giờ sáng.", hasFlightBtn: true, img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=500&q=80" }, { time: "14:00", title: "Check-in Resort 4 sao đối tác", desc: "Hạng phòng Deluxe ban công hướng biển.", hasHotelBtn: true, img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Ngày 2: Tour 4 Đảo Kì Thú & Lặn San Hô", nodes: [{ time: "08:30", title: "Cano HMB đón đoàn ra khơi", desc: "Khám phá hòn Mây Rút, lặn ngắm san hô tự nhiên.", img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Ngày 3: Mua sắm đặc sản & Tạm biệt Đảo Ngọc", nodes: [{ time: "09:00", title: "Ghé thăm nhà thùng nước mắm & Vườn tiêu", desc: "Mua sắm đặc sản làm quà.", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=500&q=80" }, { time: "16:00", title: "Xe đưa tiễn ra sân bay khứ hồi", desc: "Kết thúc hành trình trọn vẹn cùng HMB." }] }
+                ]
+            },
+            nhatrang: {
+                title: "Nha Trang Vịnh Biển Thiên Đường - Resort 5 Sao",
+                price: "6,900,000 đ", rating: "4.8 (890 khách)", duration: "4 Ngày 3 Đêm", tag: "Nghỉ Dưỡng Biển",
+                img: "https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?auto=format&fit=crop&w=500&q=80",
+                services: ["Vé máy bay khứ hồi chặng nội địa", "Khách sạn 5 sao mặt đường Trần Phú", "Vé trọn gói VinWonders", "Buffet sáng"],
+                policies: ["Hủy tour trước 7 ngày phạt 30%", "Trẻ em tính theo chiều cao quy định VinWonders"],
+                days: [
+                    { title: "Day 1: Đáp sân bay Cam Ranh - Nhận phòng nghỉ ngơi", nodes: [{ time: "11:00", title: "Xe đón tại sân bay Cam Ranh", desc: "Di chuyển về thành phố nghỉ dưỡng.", img: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Day 2: Vui chơi giải trí bất tận tại VinWonders", nodes: [{ time: "08:00", title: "Cáp treo vượt biển", desc: "Thử thách toàn bộ trò chơi ngoài trời, vịnh phao nổi.", img: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Day 3: Khám phá trọn vẹn Vịnh Nha Trang", nodes: [{ time: "08:30", title: "Du ngoạn đảo Hòn Mun - Hòn Tằm", desc: "Trải nghiệm tắm bùn khoáng phục hồi sức khỏe.", img: "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Day 4: Mua sắm đặc sản tự do - Khởi hành về", nodes: [{ time: "12:00", title: "Làm thủ tục Check-out", desc: "Xe đưa tiễn ra lại sân bay kết thúc toàn trình.", img: "https://images.unsplash.com/photo-1578894381163-e72c17f2d45f?auto=format&fit=crop&w=500&q=80" }] }
+                ]
+            },
+            sapa: {
+                title: "Hùng Vĩ Sapa - Chinh Phục Đỉnh Fansipan Đông Dương",
+                price: "4,250,000 đ", rating: "4.7 (950 khách)", duration: "3 Ngày 2 Đêm", tag: "Trải Nghiệm Tây Bắc",
+                img: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=500&q=80",
+                services: ["Xe giường nằm Cabin VIP khứ hồi", "Khách sạn View đỉnh núi 4 sao", "Vé cáp treo Fansipan", "Ăn uống đặc sản Lẩu cá hồi"],
+                policies: ["Hoàn hủy linh hoạt trước 5 ngày", "Hỗ trợ đổi xe cabin đôi cho cặp đôi miễn phí"],
+                days: [
+                    { title: "Ngày 1: Hà Nội - Di chuyển lên thị trấn sương mù Sapa", nodes: [{ time: "06:30", title: "Khởi hành bằng xe Cabin VIP", desc: "Chạy dọc cao tốc Nội Bài - Lào Cai êm ái.", img: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=500&q=80" }, { time: "13:00", title: "Check-in khách sạn trung tâm", desc: "Thưởng thức trà gừng bản bản đón sương mù.", hasHotelBtn: true, img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Ngày 2: Chinh phục đỉnh Fansipan - Nóc nhà Đông Dương", nodes: [{ time: "08:30", title: "Đi tàu hỏa Mường Hoa & Cáp treo", desc: "Vượt thung lũng ngắm mây ngàn bồng bềnh.", img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Ngày 3: Khám phá bản cổ Cát Cát - Hà Nội", nodes: [{ time: "09:00", title: "Check-in nhà gỗ, guồng nước bản Cát Cát", desc: "Tìm hiểu văn hóa dân tộc H'Mông.", img: "https://images.unsplash.com/photo-1624483017772-7634f5dbcd5a?auto=format&fit=crop&w=500&q=80" }, { time: "16:00", title: "Lên xe Cabin quay về Hà Nội", desc: "HMB chia tay và hẹn gặp lại." }] }
+                ]
+            },
+            danang: {
+                title: "Đà Nẵng - Hội An - Kì Quan Bà Nà Hills Trọn Gói",
+                price: "5,190,000 đ", rating: "4.9 (1.120 khách)", duration: "4 Ngày 3 Đêm", tag: "Hot Nhất Mùa Hè",
+                img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=500&q=80",
+                services: ["Vé máy bay khứ hồi kèm hành lý", "Khách sạn 4 sao sát biển Mỹ Khê", "Vé cáp treo Bà Nà & Buffet", "Xe đưa đón toàn trình"],
+                policies: ["Giảm 10% khi đăng ký nhóm trên 6 người", "Không hoàn cọc vé Bà Nà trong ngày"],
+                days: [
+                    { title: "Ngày 1: Đến Đà Nẵng - Check-in Biển Mỹ Khê", nodes: [{ time: "10:00", title: "Hạ cánh Đà Nẵng", desc: "Xe đón về nhận phòng khách sạn mặt biển.", img: "https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Ngày 2: Khám phá Tiên cảnh Bà Nà Hills - Cầu Vàng", nodes: [{ time: "08:00", title: "Trải nghiệm cáp treo đạt kỷ lục", desc: "Check-in Cầu Vàng nổi tiếng thế giới, làng Pháp.", img: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Ngày 3: Ngũ Hành Sơn - Hoài niệm Phố cổ Hội An", nodes: [{ time: "15:00", title: "Khám phá Hội An lung linh đèn lồng", desc: "Thưởng thức Cao Lầu, đi thuyền thả hoa đăng.", img: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Ngày 4: Chùa Linh Ứng - Tạm biệt Đà Nẵng", nodes: [{ time: "09:00", title: "Viếng tượng Phật Bà Bán Đảo Sơn Trà", desc: "Mua sắm đặc sản mắm cá, mực rim.", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80" }] }
+                ]
+            },
+            halong: {
+                title: "Kỳ Quan Hạ Long: Ngủ Đêm Du Thuyền 5 Sao Đẳng Cấp",
+                price: "3,650,000 đ", rating: "4.9 (720 khách)", duration: "2 Ngày 1 Đêm", tag: "Trải Nghiệm Thượng Lưu",
+                img: "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=500&q=80",
+                services: ["01 đêm phòng Thuyền Suite có ban công", "4 bữa ăn fine-dining cao cấp", "Vé tham quan hang động", "Chèo thuyền Kayak"],
+                policies: ["Yêu cầu hộ chiếu/CCCD để đăng ký cảng vụ", "Phụ thu lễ tết theo quy định du thuyền"],
+                days: [
+                    { title: "Ngày 1: Check-in Du thuyền - Khám phá vịnh Lan Hạ / Hạ Long", nodes: [{ time: "12:00", title: "Nâng ly Welcome Drink", desc: "Thuyền trưởng phổ biến quy định an toàn.", img: "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=500&q=80" }, { time: "15:00", title: "Chèo thuyền Kayak tại Hang Luồn", desc: "Tự do len lỏi qua các vách núi đá vôi đá ngầm.", img: "https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Ngày 2: Tập Taichi đón bình minh - Thăm Hang Sửng Sốt", nodes: [{ time: "06:15", title: "Lớp học Thái Cực Quyền trên Sundeck", desc: "Đón nắng sớm trong lành trên vịnh kĩ vĩ.", img: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=500&q=80" }, { time: "11:30", title: "Cập bến cảng tuần châu - Trở về", desc: "Kết thúc hải trình nghỉ dưỡng đẳng cấp.", img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=500&q=80" }] }
+                ]
+            },
+            dalat: {
+                title: "Đà Lạt Mộng Mơ: Săn Mây Đại Ngàn - Homestay View Đỉnh",
+                price: "3,150,000 đ", rating: "4.6 (640 khách)", duration: "3 Ngày 2 Đêm", tag: "Xu Hướng Giới Trẻ",
+                img: "https://images.unsplash.com/photo-1583212292454-1fe6229603b7?auto=format&fit=crop&w=500&q=80",
+                services: ["Vé máy bay/Xe limousine khứ hồi", "Khách sạn phong cách Bắc Âu trung tâm", "Xe máy đi lại tự do", "Tour săn mây cầu đất"],
+                policies: ["Phụ hợp cho các bạn trẻ thích tự do trải nghiệm", "Hỗ trợ chuẩn bị tiệc BBQ ngoài trời"],
+                days: [
+                    { title: "Ngày 1: Khởi hành lên xứ sở ngàn hoa - Thác Datanla", nodes: [{ time: "13:00", title: "Nhận phòng homestay thông reo", desc: "Tận hưởng không khí se lạnh 18 độ C cực chill.", img: "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Ngày 2: Săn mây Cầu Đất - Check-in Chika Farm", nodes: [{ time: "04:30", title: "Săn mây trên thảm gỗ đồi chè", desc: "Chụp ảnh đón bình minh lung linh xuất sắc.", img: "https://images.unsplash.com/photo-1470252649358-9694d89354d9?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Ngày 3: Quảng trường Lâm Viên - Tạm biệt Đà Lạt", nodes: [{ time: "09:00", title: "Cà phê view thung lũng & mua mứt hồng", desc: "Check-in nụ hoa Atiso khổng lồ.", img: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=500&q=80" }] }
+                ]
+            },
+            mientay: {
+                title: "Hương Sắc Miền Tây: Chợ Nổi Cái Răng - Miệt Vườn Trái Cây",
+                price: "2,990,000 đ", rating: "4.7 (510 khách)", duration: "3 Ngày 2 Đêm", tag: "Văn Hóa Đậm Chất",
+                img: "https://images.unsplash.com/photo-1543731068-7e0f5beff43a?auto=format&fit=crop&w=500&q=80",
+                services: ["Xe du lịch đời mới suốt tuyến", "Khách sạn 4 sao Cần Thơ sát bến Ninh Kiều", "Vé tàu tham quan chợ nổi", "Ăn uống miệt vườn"],
+                policies: ["Thực đơn bao gồm đặc sản Đậm chất Nam Bộ", "Trẻ em tính nửa giá người lớn"],
+                days: [
+                    { title: "Ngày 1: TP.HCM - Đến với Mỹ Tho - Bến Tre - Cần Thơ", nodes: [{ time: "07:30", title: "Khởi hành đi Mỹ Tho", desc: "Ghé thăm chùa Vĩnh Tràng cổ kính.", img: "https://images.unsplash.com/photo-1596422846543-75c6fc1f4767?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Ngày 2: Trải nghiệm Chợ Nổi Cái Răng - Độc đáo sông nước", nodes: [{ time: "05:30", title: "Xuống đò đi Chợ Nổi", desc: "Ăn hủ tiếu ngay trên ghe tàu, mua trái cây tươi rói.", img: "https://images.unsplash.com/photo-1605538032432-a9f0c8d9baac?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Ngày 3: KDL Mỹ Khánh - Trở về TP.HCM", nodes: [{ time: "10:00", title: "Trải nghiệm làm bánh tráng, đổ bánh xèo", desc: "Thư giãn nghỉ ngơi trước khi xe đưa về.", img: "https://images.unsplash.com/photo-1543731068-7e0f5beff43a?auto=format&fit=crop&w=500&q=80" }] }
+                ]
+            },
+            condao: {
+                title: "Côn Đảo Tâm Linh: Hoài Niệm Lịch Sử & Nghỉ Dưỡng Hoang Sơ",
+                price: "4,950,000 đ", rating: "4.9 (420 khách)", duration: "3 Ngày 2 Đêm", tag: "Tour Tâm Linh Cao Cấp",
+                img: "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=500&q=80",
+                services: ["Vé máy bay khứ hồi Côn Đảo", "Khách sạn tiêu chuẩn HMB sát biển", "Đồ lễ tâm linh chuẩn bị chu đáo", "Xe đưa đón định vị"],
+                policies: ["Nghiêm túc trong trang phục đi viếng nghĩa trang", "Lịch trình có thể linh hoạt theo giờ viếng đài"],
+                days: [
+                    { title: "Ngày 1: Bay đến Côn Đảo - Viếng di tích nhà tù", nodes: [{ time: "10:30", title: "Hạ cánh Sân bay Cỏ Ống", desc: "Xe đưa về trung tâm nghỉ ngơi.", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=500&q=80" }, { time: "14:30", title: "Tham quan Nhà tù Côn Đảo", desc: "Nghe thuyết minh về lòng dũng cảm của các chiến sĩ.", img: "https://images.unsplash.com/photo-1578894381163-e72c17f2d45f?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Ngày 2: Viếng Nghĩa Trang Hàng Dương đêm - Bãi Nhát", nodes: [{ time: "15:00", title: "Tự do tắm biển Bãi Nhát hoang sơ", desc: "Ngắm hoàng hôn tuyệt đẹp buông xuống.", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80" }, { time: "22:00", title: "Viếng mộ Nữ anh hùng Võ Thị Sáu", desc: "Thời gian linh thiêng tâm linh nhất trên đảo.", img: "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=500&q=80" }] },
+                    { title: "Ngày 3: Viếng Miếu Bà Phi Yến - Trở về", nodes: [{ time: "09:00", title: "Cầu bình an tại Miếu Bà", desc: "Trả phòng, xe đưa ra sân bay.", img: "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=500&q=80" }] }
+                ]
+            }
+        };
+
+        // ==================== HÀM RENDER ĐỘNG DANH SÁCH TOUR CÓ BỘ LỌC ====================
+        function renderHomeTours(filterLocation = "", filterTag = "") {
+            const container = document.getElementById('tour-cards-container');
+            let cardsHtml = "";
+            let matchCount = 0;
+            
+            for (const key in tourDatabase) {
+                const tour = tourDatabase[key];
+                
+                if (filterLocation && key !== filterLocation) continue;
+                if (filterTag && tour.tag !== filterTag) continue;
+                
+                matchCount++;
+                cardsHtml += `
+                    <div class="tour-card">
+                        <img class="tour-card-img" src="${tour.img}" alt="${tour.title}">
+                        <div class="tour-card-body">
+                            <div>
+                                <span class="tour-card-tag">${tour.tag}</span>
+                                <h3 class="tour-card-title">${tour.title}</h3>
+                            </div>
+                            <div>
+                                <div class="tour-card-info">
+                                    <span><i class="fa-solid fa-clock"></i> ${tour.duration}</span>
+                                    <span><i class="fa-solid fa-star rating"></i> ${tour.rating.split(' ')[0]}</span>
+                                </div>
+                                <div class="tour-card-footer">
+                                    <div class="tour-card-price">${tour.price}</div>
+                                    <button class="btn-view-tour" onclick="loadTourDetail('${key}')">Xem lịch trình</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (matchCount === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #fff; border-radius:12px; box-shadow: var(--shadow);">
+                        <i class="fa-solid fa-magnifying-glass-minus fa-3x" style="color: #CBD5E1; margin-bottom: 15px;"></i>
+                        <p style="font-weight: 500; color: var(--text-dark);">HMB Agency không tìm thấy gói tour phù hợp với tiêu chí của bạn.</p>
+                        <button onclick="resetSearch()" style="margin-top: 15px; background: var(--primary-color); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer;">Xem tất cả các gói</button>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = cardsHtml;
+            }
+        }
+
+        function executeSearch() {
+            const selectedLocation = document.getElementById('search-location').value;
+            const selectedTag = document.getElementById('search-tag').value;
+            
+            const titleElement = document.getElementById('homepage-title');
+            if(selectedLocation || selectedTag) {
+                titleElement.innerText = "Kết Quả Lọc Gói Du Lịch";
+            } else {
+                titleElement.innerText = "Hệ Thống Gói Du Lịch Độc Quyền HMB";
+            }
+
+            renderHomeTours(selectedLocation, selectedTag);
+        }
+
+        function resetSearch() {
+            document.getElementById('search-location').value = "";
+            document.getElementById('search-tag').value = "";
+            document.getElementById('homepage-title').innerText = "Hệ Thống Gói Du Lịch Độc Quyền HMB";
+            renderHomeTours();
+        }
+
+        // ==================== CÁC HÀM ĐIỀU KHIỂN CHI TIẾT VÀ TABS PANEL ====================
+        function switchTab(clickedButton, targetTabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            clickedButton.classList.add('active');
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            document.getElementById(targetTabId).classList.add('active');
+        }
+
+        function loadTourDetail(tourKey) {
+            const data = tourDatabase[tourKey];
+            if (!data) return;
+
+            const firstTabBtn = document.querySelector('.sticky-tabs .tab-btn');
+            switchTab(firstTabBtn, 'tab-itinerary');
+
+            document.getElementById('dyn-title').innerText = data.title;
+            document.getElementById('dyn-rating').innerHTML = `<i class="fa-solid fa-star rating"></i> ${data.rating}`;
+            document.getElementById('dyn-duration').innerHTML = `<i class="fa-solid fa-clock"></i> ${data.duration}`;
+            document.getElementById('total-price').innerText = data.price;
+
+            let htmlContent = "";
+            data.days.forEach((day, index) => {
+                let activeClass = index === 0 ? "active" : "";
+                let nodesHtml = "";
+
+                day.nodes.forEach(node => {
+                    let actionBtn = "";
+                    if(node.hasFlightBtn) {
+                        actionBtn = `<button class="ux-action-btn" onclick="alert('Đang đồng bộ API hãng bay hàng không để tối ưu đổi giờ...')"><i class="fa-solid fa-plane"></i> Đổi giờ bay</button>`;
+                    } else if(node.hasHotelBtn) {
+                        actionBtn = `<button class="ux-action-btn" onclick="alert('Đang liên kết quỹ phòng chiến lược HMB để nâng cấp...')"><i class="fa-solid fa-hotel"></i> Đổi phòng / Nâng cấp</button>`;
+                    }
+
+                    nodesHtml += `
+                        <div class="timeline-node">
+                            <div class="timeline-dot"></div>
+                            <span class="time-tag">${node.time}</span>
+                            <div class="node-title">${node.title}</div>
+                            <div class="node-desc">${node.desc}</div>
+                            ${actionBtn}
+                            <div class="node-media">
+                                <div class="main-img" style="background: url('${node.img}') center/cover;"></div>
+                                <div class="map-preview" onclick="alert('Đang kết nối hệ thống bản đồ định vị HMB...')"><i class="fa-solid fa-map-location-dot fa-2x"></i><span>Xem lộ trình</span></div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                htmlContent += `
+                    <div class="accordion-item ${activeClass}">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="day-title"><i class="fa-solid fa-calendar-day"></i> ${day.title}</div>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="timeline">${nodesHtml}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('dyn-itinerary-box').innerHTML = htmlContent;
+
+            let servicesHtml = "";
+            data.services.forEach(item => { servicesHtml += `<li><i class="fa-solid fa-check" style="color:#2ECC71; margin-right:8px;"></i> ${item}</li>`; });
+            document.getElementById('dyn-services-list').innerHTML = servicesHtml;
+
+            let policiesHtml = "";
+            data.policies.forEach(item => { policiesHtml += `<li><i class="fa-solid fa-circle-dot" style="color:var(--accent-color); margin-right:8px; font-size:12px;"></i> ${item}</li>`; });
+            document.getElementById('dyn-policies-list').innerHTML = policiesHtml;
+
+            document.getElementById('home-section').style.display = 'none';
+            document.getElementById('detail-section').style.display = 'grid';
+            window.scrollTo(0, 0);
+        }
+
+        function showHomePage() {
+            document.getElementById('detail-section').style.display = 'none';
+            document.getElementById('home-section').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        // Accordion đóng mở
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const isActive = item.classList.contains('active');
+            document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
+            if (!isActive) item.classList.add('active');
+        }
+
+        window.onload = function() {
+            renderHomeTours();
+        };
+    </script>
+</body>
+</html>
