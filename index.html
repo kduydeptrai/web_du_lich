@@ -9,8 +9,8 @@
     
     <style>
         :root {
-            --primary-color: #0F4C81; /* Classic Blue - Đáng tin cậy, Chuyên nghiệp */
-            --accent-color: #E67E22;  /* Màu cam - Kích thích đặt tour */
+            --primary-color: #0F4C81; 
+            --accent-color: #E67E22;  
             --text-dark: #2C3E50;
             --text-light: #7F8C8D;
             --bg-light: #F8F9FA;
@@ -39,7 +39,6 @@
             flex: 1;
         }
 
-        /* MENU TRONG SUỐT & ĐỔI MÀU LOGO NỔI BẬT */
         header {
             background: transparent; 
             box-shadow: none;        
@@ -52,16 +51,15 @@
         .navbar {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 15px 20px;
+            padding: 18px 20px; 
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start; 
             align-items: center;
         }
 
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 10px;
             cursor: pointer;
         }
 
@@ -73,21 +71,13 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.2); 
         }
 
-        .slogan {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.9); 
-            font-style: italic;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-
-        /* ==================== 1. GIAO DIỆN TRANG CHỦ ==================== */
         .hero-banner {
             background: linear-gradient(rgba(15, 76, 129, 0.85), rgba(15, 76, 129, 0.95)), url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80') center/cover;
             color: #fff;
             text-align: center;
             padding: 80px 20px;
-            margin-top: -66px; 
-            padding-top: 130px;
+            margin-top: -72px; 
+            padding-top: 135px;
         }
 
         .hero-banner h1 { font-size: 38px; font-weight: 700; margin-bottom: 15px; }
@@ -144,7 +134,6 @@
         .tour-card-price { font-size: 18px; font-weight: 700; color: var(--accent-color); }
         .btn-view-tour { background: var(--primary-color); color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
 
-        /* ==================== 2. GIAO DIỆN CHI TIẾT TOUR ==================== */
         #detail-section {
             display: none;
             max-width: 1200px;
@@ -152,7 +141,6 @@
             padding: 0 20px;
         }
 
-        /* KHU VỰC CHỨA NÚT QUAY LẠI - ĐỘC LẬP HOÀN TOÀN KHÔNG BỊ CO GIÃN */
         .back-container {
             width: 100%;
             margin-bottom: 20px;
@@ -180,7 +168,6 @@
             border-color: #0b375e;
         }
 
-        /* Khung chia 2 cột nội dung chi tiết */
         .detail-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -192,7 +179,14 @@
         .tour-meta { display: flex; gap: 15px; color: var(--text-light); font-size: 14px; align-items: center; }
         .rating { color: #F1C40F; }
 
-        .sticky-tabs { position: sticky; top: 75px; background: #fff; display: flex; border-bottom: 2px solid var(--border-color); margin-bottom: 25px; z-index: 90; border-radius: 8px 8px 0 0; }
+        .sticky-tabs { 
+            background: #fff; 
+            display: flex; 
+            border-bottom: 2px solid var(--border-color); 
+            margin-bottom: 25px; 
+            border-radius: 8px 8px 0 0; 
+        }
+        
         .tab-btn { flex: 1; padding: 15px 10px; background: none; border: none; font-size: 15px; font-weight: 600; color: var(--text-light); cursor: pointer; text-align: center; border-bottom: 3px solid transparent; }
         .tab-btn.active { color: var(--primary-color); border-bottom-color: var(--primary-color); background: #F8FAFC; }
 
@@ -204,7 +198,6 @@
         .panel-content-card ul { padding-left: 20px; }
         .panel-content-card li { margin-bottom: 10px; font-size: 15px; }
 
-        /* Accordion Timeline */
         .accordion-item { background: #fff; border-radius: 8px; margin-bottom: 15px; box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--border-color); }
         .accordion-header { padding: 18px 20px; background: #fff; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
         .accordion-header:hover { background: #F8FAFC; }
@@ -214,7 +207,6 @@
         .accordion-header i.fa-chevron-down { transition: transform 0.3s; }
         .accordion-item.active .accordion-header i.fa-chevron-down { transform: rotate(180deg); }
 
-        /* Timeline Nodes */
         .timeline { position: relative; padding-left: 30px; }
         .timeline::before { content: ''; position: absolute; left: 7px; top: 10px; bottom: 10px; width: 2px; background: #CBD5E1; }
         .timeline-node { position: relative; margin-bottom: 25px; }
@@ -229,7 +221,6 @@
         .ux-action-btn { background: #fff; border: 1px solid var(--primary-color); color: var(--primary-color); padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
         .ux-action-btn:hover { background: var(--primary-color); color: #fff; }
 
-        /* Booking Sidebar */
         .booking-sidebar { background: #fff; padding: 25px; border-radius: 12px; box-shadow: var(--shadow); position: sticky; top: 75px; height: fit-content; border-top: 4px solid var(--primary-color); }
         .price-amount { font-size: 30px; font-weight: 700; color: var(--accent-color); margin-bottom: 15px; }
         .btn-booking { width: 100%; background: var(--accent-color); color: #fff; border: none; padding: 15px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
@@ -237,7 +228,6 @@
         .feature-item { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 14px; }
         .feature-item i { color: #2ECC71; }
 
-        /* FOOTER THƯƠNG HIỆU */
         footer {
             background-color: #1A252F; 
             color: #fff;
@@ -263,7 +253,6 @@
         .contact-link-item:hover { color: var(--accent-color); }
         .contact-link-item i { color: var(--accent-color); font-size: 16px; }
 
-        /* RESPONSIVE MEDIA QUERIES */
         @media (max-width: 992px) { 
             .detail-grid { grid-template-columns: 1fr; } 
         }
@@ -276,7 +265,6 @@
             .footer-contact-side { flex-direction: column; gap: 12px; align-items: center; }
         }
 
-        /* HIỂN THỊ 2 THÈ / HÀNG TRÊN MOBILE */
         @media (max-width: 600px) {
             .homepage-tours { padding: 0 10px; margin: 30px auto; }
             .section-title { font-size: 22px; margin-bottom: 20px; }
@@ -304,7 +292,6 @@
             <div class="logo-area" onclick="showHomePage()">
                 <div class="logo">HMB AGENCY</div>
             </div>
-            <div class="slogan">"Hành trình mới, Trải nghiệm mới"</div>
         </div>
     </header>
 
@@ -348,8 +335,7 @@
 
         <section class="homepage-tours">
             <h2 class="section-title" id="homepage-title">Hệ Thống Gói Du Lịch Độc Quyền HMB</h2>
-            <div class="tour-grid" id="tour-cards-container">
-                </div>
+            <div class="tour-grid" id="tour-cards-container"></div>
         </section>
     </div>
 
@@ -532,7 +518,6 @@
             }
         };
 
-        // ==================== KHỞI TẠO HỆ THỐNG JAVASCRIPT ====================
         function renderHomeTours(filterLocation = "", filterTag = "") {
             const container = document.getElementById('tour-cards-container');
             let cardsHtml = "";
@@ -672,7 +657,7 @@
             document.getElementById('dyn-policies-list').innerHTML = policiesHtml;
 
             document.getElementById('home-section').style.display = 'none';
-            document.getElementById('detail-section').style.display = 'block'; // Đổi từ grid thành block để tương thích với cấu trúc tách biệt mới
+            document.getElementById('detail-section').style.display = 'block'; 
             window.scrollTo(0, 0);
         }
 
